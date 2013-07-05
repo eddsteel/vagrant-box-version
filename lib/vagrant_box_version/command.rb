@@ -8,7 +8,7 @@ module VagrantBoxVersion
     include Comparable
 
     def initialize(string)
-      @build = string.strip[/[^-]*/]
+      @build = string.strip[/[^-]*/].to_i
       @hash = if string.include? "-" then string.strip.split("-")[1] else "" end
     end
 
@@ -28,21 +28,25 @@ module VagrantBoxVersion
 
       with_target_vms() do |machine|
         box = machine.box
-        version = local_version(box.directory)
-        remote = remote_version(machine.config.version.url, box.name)
+        unless box.nil?
+          version = local_version(box.directory)
+          remote = remote_version(machine.config.version.url, box.name)
 
-        ui.info("Local version is #{version || "unknown"}")
+          ui.info("Local version is #{version || "unknown"}")
 
-        if (version || VersionString.new("0")) < (remote || VersionString.new("0"))
-          ui.warn("Version #{remote} is available!")
-          ui.info("To update, run:")
-          ui.info("  vagrant destroy && vagrant box remove #{box.name}")
-        elsif version.nil?
-          ui.warn("Local version couldn't be determined. You should probably upgrade your box.")
-        elsif remote.nil?
-          ui.warn("Remote version couldn't be determined. Try again later.")
+          if (version || VersionString.new("0")) < (remote || VersionString.new("0"))
+            ui.warn("Version #{remote} is available!")
+            ui.info("To update, run:")
+            ui.info("  vagrant destroy && vagrant box remove #{box.name} #{box.provider.to_s}")
+          elsif version.nil?
+            ui.warn("Local version couldn't be determined. You should probably upgrade your box.")
+          elsif remote.nil?
+            ui.warn("Remote version couldn't be determined. Try again later.")
+          else
+            ui.success("You are up to date!")
+          end
         else
-          ui.info("You are up to date!")
+          ui.success("There is no local box yet. Nothing to do.")
         end
       end
     end
