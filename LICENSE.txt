@@ -1,4 +1,4 @@
-Copyright (c) 2013 Edd Steel
+Copyright (c) 2013 Hootsuite Media Inc.
 
 MIT License
 
