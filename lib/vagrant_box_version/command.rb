@@ -9,7 +9,7 @@ module VagrantBoxVersion
 
     def initialize(string)
       @build = string.strip[/[^-]*/]
-      @hash = if string.include? "-" then string.split("-")[1] else "" end
+      @hash = if string.include? "-" then string.strip.split("-")[1] else "" end
     end
 
     def to_s
@@ -23,17 +23,13 @@ module VagrantBoxVersion
 
   class Command < Vagrant.plugin(2, :command)
 
-    def initialize(args, environment)
-      @args = args
-    end
-
     def execute
       ui = @env.ui
 
       with_target_vms() do |machine|
         box = machine.box
         version = local_version(box.directory)
-        remote = remote_version(box.config.url, box.name)
+        remote = remote_version(machine.config.version.url, box.name)
 
         ui.info("Local version is #{version || "unknown"}")
 
@@ -48,8 +44,6 @@ module VagrantBoxVersion
         else
           ui.info("You are up to date!")
         end
-      else
-        ui.error("Local box is unavailable. Please init")
       end
     end
 

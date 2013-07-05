@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = VagrantBoxVersion::VERSION
   spec.authors       = ["Edd Steel"]
   spec.email         = ["edward.steel@hootsuite.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = "Plugin to provide version information for boxes"
+  spec.summary       = "Plugin to provide version information for boxes"
   spec.homepage      = ""
   spec.license       = "MIT"
 

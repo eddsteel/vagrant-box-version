@@ -1,5 +1,3 @@
 require "vagrant_box_version/version"
+require "vagrant_box_version/plugin"
 
-module VagrantBoxVersion
-  # Your code goes here...
-end
