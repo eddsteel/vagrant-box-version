@@ -44,6 +44,9 @@ You can then run `vagrant version` to check you have the latest version. If
 you don't or either remote or local version can't be determined, you will be
 warned about it.
 
+From version 0.0.2, you can simply run `vagrant up`, `vagrant provision` or
+`vagrant reload` and the version checking will be triggered.
+
 ### Installation from source.
 
 Simply run `rake build`, and then
