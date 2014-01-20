@@ -12,11 +12,7 @@ module VagrantBoxVersion
     end
 
     def validate(machine)
-      if @url.empty?
-        { "version" => ["config.version.url must be set"] }
-      else
         {}
-      end
     end
   end
 end

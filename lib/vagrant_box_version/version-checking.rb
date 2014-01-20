@@ -27,6 +27,9 @@ module VagrantBoxVersion
 
   module VersionChecking
     def check(machine, ui)
+      if (machine.config.version.url.empty?)
+        ui.error("config.version.url must be set", scope: machine.name)
+      end
       box = machine.box
       unless box.nil?
         version = local_version(box.directory)
