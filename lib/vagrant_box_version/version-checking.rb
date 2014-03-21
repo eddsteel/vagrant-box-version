@@ -41,7 +41,7 @@ module VagrantBoxVersion
           if (version || VersionString.new("0")) < (remote || VersionString.new("0"))
             ui.warn("Version #{remote} is available!", scope: machine.name)
             ui.info("To update, run:")
-            ui.info("  vagrant destroy #{machine.name} && vagrant box remove #{box.name} #{box.provider.to_s}")
+            ui.info("  vagrant destroy #{machine.name} && vagrant box remove #{box.name} --provider #{box.provider.to_s}")
           elsif version.nil?
             ui.warn("Local version couldn't be determined. You should probably upgrade your box.", scope: machine.name)
           elsif remote.nil?
