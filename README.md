@@ -65,4 +65,9 @@ This is always going to be minimal. However in the future it might:
 Contributions in the form of pull requests are are very welcome, though anyone
 wanting to produce a full box package manager might want to start again.
 
+## Changes
+
+- v.0.0.6: Play even nicer with vagrantfiles without required config
+  (some reports of those boxes not even starting.)
+
 [fowler]: http://chadfowler.com/blog/2013/06/23/immutable-deployments/

@@ -28,28 +28,30 @@ module VagrantBoxVersion
   module VersionChecking
     def check(machine, ui)
       if (machine.config.version.url.empty?)
-        ui.error("config.version.url must be set", scope: machine.name)
-      end
-      box = machine.box
-      unless box.nil?
-        version = local_version(box.directory)
-        remote = remote_version(machine.config.version.url, box.name)
-
-        ui.info("Local version is #{version || "unknown"}", scope: machine.name)
-
-        if (version || VersionString.new("0")) < (remote || VersionString.new("0"))
-          ui.warn("Version #{remote} is available!", scope: machine.name)
-          ui.info("To update, run:")
-          ui.info("  vagrant destroy #{machine.name} && vagrant box remove #{box.name} #{box.provider.to_s}")
-        elsif version.nil?
-          ui.warn("Local version couldn't be determined. You should probably upgrade your box.", scope: machine.name)
-        elsif remote.nil?
-          ui.warn("Remote version couldn't be determined. Try again later.", scope: machine.name)
-        else
-          ui.success("You are up to date!", scope: machine.name)
-        end
+        ui.warn("to use the vagrant version plugin, config.version.url must be set",
+                 scope: machine.name)
       else
-        ui.success("There is no local box yet. Nothing to do.", scope: machine.name)
+        box = machine.box
+        unless box.nil?
+          version = local_version(box.directory)
+          remote = remote_version(machine.config.version.url, box.name)
+
+          ui.info("Local version is #{version || "unknown"}", scope: machine.name)
+
+          if (version || VersionString.new("0")) < (remote || VersionString.new("0"))
+            ui.warn("Version #{remote} is available!", scope: machine.name)
+            ui.info("To update, run:")
+            ui.info("  vagrant destroy #{machine.name} && vagrant box remove #{box.name} #{box.provider.to_s}")
+          elsif version.nil?
+            ui.warn("Local version couldn't be determined. You should probably upgrade your box.", scope: machine.name)
+          elsif remote.nil?
+            ui.warn("Remote version couldn't be determined. Try again later.", scope: machine.name)
+          else
+            ui.success("You are up to date!", scope: machine.name)
+          end
+        else
+          ui.success("There is no local box yet. Nothing to do.", scope: machine.name)
+        end
       end
     end
 
